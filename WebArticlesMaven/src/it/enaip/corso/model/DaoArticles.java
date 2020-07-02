@@ -27,10 +27,10 @@ public class DaoArticles implements ArticlesDao {
 	@Override
 	public Optional<Articles> find(String id) throws SQLException {
 
-		String sql = "SELECT articles_id,name, description, quantity, location FROM stuff WHERE articles_id=? ";
+		String sql = "SELECT articles_id,name, description, quantity, location FROM articles WHERE articles_id=? ";
 		int id_articles = 0, quantity = 0;
 		String name = "", description = "", location = "";
-		Connection conn = DataSourceFactory.getConnection();
+		Connection conn = DbConnect.getInstance().getConnection();
 
 		PreparedStatement statement= conn.prepareStatement(sql);
 		statement.setString(1, id);
@@ -52,7 +52,7 @@ public class DaoArticles implements ArticlesDao {
 		List<Articles> listArticles = new ArrayList<>();
 		String sql = "SELECT articles_id,name,description,quantity,location FROM articles";
 
-		Connection conn = DataSourceFactory.getConnection();
+		Connection conn = DbConnect.getInstance().getConnection();
 		Statement statement = conn.createStatement();
 		ResultSet resultSet = statement.executeQuery(sql);
 
@@ -74,7 +74,8 @@ public class DaoArticles implements ArticlesDao {
 
 		String sql = "INSERT into articles (name, description,quantity,location) VALUES (?,?,?,?)";
 		boolean rowInserted = false;
-		Connection conn = DataSourceFactory.getConnection();
+		
+		Connection conn = DbConnect.getInstance().getConnection();
 		PreparedStatement statement = conn.prepareStatement(sql);
 		statement.setString(1, articles.getName());
 		statement.setString(2, articles.getDescription());
@@ -89,12 +90,13 @@ public class DaoArticles implements ArticlesDao {
 		String sql = "UPDATE articles SET name = ?, description= ?, quantity= ?, location= ?";
 		sql += "WHERE articles_id =?";
 		boolean rowUpdateted = false;
-		Connection conn = DataSourceFactory.getConnection();
+		Connection conn = DbConnect.getInstance().getConnection();
 		PreparedStatement statement = conn.prepareStatement(sql);
 		statement.setString(1, articles.getName());
 		statement.setString(2, articles.getDescription());
 		statement.setInt(3, articles.getQuantity());
 		statement.setString(4, articles.getLocation());
+		statement.setInt(5, articles.getId());
 		rowUpdateted = statement.executeUpdate() > 0;
 
 		return rowUpdateted;
@@ -106,7 +108,7 @@ public class DaoArticles implements ArticlesDao {
 		String sql = "DELETE FROM articles where articles_id = ?";
 		boolean rowDeleted = false;
 
-		Connection conn = DataSourceFactory.getConnection();
+		Connection conn = DbConnect.getInstance().getConnection();
 		PreparedStatement statement = conn.prepareStatement(sql);
 		statement.setInt(1, articles.getId());
 		rowDeleted = statement.executeUpdate() > 0;

@@ -3,7 +3,7 @@
 
 <!doctype html>
 <html lang="en">
-<%@include file="head.jsp"%>
+
 <body>
 	<div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
 		<%@include file="Menu.jsp"%>
@@ -21,10 +21,10 @@
 							</div>
 							<div class="mdl-card__supporting-text">
 								<c:if test="${articles !=null}">
-									<form name=myForm " action="../ArticlesController?op=update" method="post" onsubmit="return validateForm()">
+									<form name=myForm " action="ArticlesController?op=update" method="post" onsubmit="return validateForm()">
 								</c:if>
 								<c:if test="${articles ==null}">
-									<form name="myForm" action="../ArticlesController?op=insert" method="post" onsubmit="return validateForm()">
+									<form name="myForm" action="ArticlesController?op=insert" method="post" onsubmit="return validateForm()">
 								</c:if>
 								<c:if test="${articles !=null}">
 									<input type="hidden" name="id"

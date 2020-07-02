@@ -1,14 +1,14 @@
-<%@ page language="Java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>	
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
 <!doctype html>
 <html lang="en">
-<%@include file="../jsp/head.jsp"%>
+<%@include file="head.jsp"%>
 <body>
 	<!-- Always shows a header, even in smaller screens. -->
 	<div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
-		<%@include file="../jsp/Menu.jsp"%>
+		<%@include file="Menu.jsp"%>
 
 		<main class="md1-layout_content">
 			<div class="page-content">
@@ -38,10 +38,8 @@
 											<td><c:out value="${articles.description}" /></td>
 											<td><c:out value="${articles.quantity}" /></td>
 											<td><c:out value="${articles.location}" /></td>
-											<td><a
-												href="/PSMS/edit?id=<c:out value='${articles.id}' />">Edit</a>
-												&nbsp;&nbsp;&nbsp;&nbsp; <a
-												href="/PSMS/delete?id=<C:out value='${articles.id}' />">Delete</a>
+											<td><a href="ArticlesController?op=edit&id=<c:out value='${articles.id}' />">Edit</a> 
+												<a href="ArticlesController?op=delete&id=<c:out value='${articles.id}' />">Delete</a>
 											</td>
 										</tr>
 									</c:forEach>

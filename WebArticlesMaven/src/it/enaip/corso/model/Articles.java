@@ -16,6 +16,7 @@ public class Articles {
 	}
 	
 	public Articles(int id, String name, String description, int quantity, String location) {
+		this(name, description, quantity, location);
 		this.id = id;
 	}
 	public Articles(String name, String description, int quantity, String location) {

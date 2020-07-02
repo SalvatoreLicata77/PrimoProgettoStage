@@ -13,12 +13,20 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-@WebServlet(name = "ArticlesController", urlPatterns = { "/ArticlesController" })
+@WebServlet("/ArticlesController" )
 public class ArticlesController extends HttpServlet {
+	
+	
+	
 	private static final long serialVersionUID = 1L;
+	
 	private DaoArticles articlesDao = DaoArticles.getInstance();
 	private static final Logger LOGGER = Logger.getLogger(ArticlesController.class.getName());
 
+	 public ArticlesController() {
+	        super();
+	        // TODO Auto-generated constructor stub
+	    }
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		doGet(req, resp);
@@ -34,6 +42,10 @@ public class ArticlesController extends HttpServlet {
 			switch (op) {
 			case "new":
 				showNewForm(req, resp);
+				break;
+				
+			case "list":
+				listArticles(req, resp);
 				break;
 			case "insert":
 				insertArticles(req, resp);
@@ -67,14 +79,14 @@ public class ArticlesController extends HttpServlet {
 
 		Articles articles = new Articles(id, name, description, quantity, location);
 		articlesDao.update(articles);
-		resp.sendRedirect("list");
+		resp.sendRedirect("ArticlesList.jsp");
 	}
 
 	private void showEditForm(HttpServletRequest req, HttpServletResponse resp)
 			throws SQLException, IOException, ServletException {
 		String id = req.getParameter("id");
 		Optional<Articles> existingArticles = articlesDao.find(id);
-		RequestDispatcher dispatcher = req.getRequestDispatcher("jsp/ArticlesForm.jsp");
+		RequestDispatcher dispatcher = req.getRequestDispatcher("ArticlesForm.jsp");
 		existingArticles.ifPresent(s -> req.setAttribute("articles", s));
 		dispatcher.forward(req, resp);
 	}
@@ -85,7 +97,7 @@ public class ArticlesController extends HttpServlet {
 
 		Articles articles = new Articles(id);
 		articlesDao.delete(articles);
-		resp.sendRedirect("list");
+		resp.sendRedirect("ArticlesList.jsp");
 	}
 
 	private void insertArticles(HttpServletRequest req, HttpServletResponse resp)
@@ -97,19 +109,19 @@ public class ArticlesController extends HttpServlet {
 
 		Articles newArticles = new Articles(name, description, quantity, location);
 		articlesDao.save(newArticles);
-		resp.sendRedirect("list");
+		resp.sendRedirect("ArticlesList.jsp");
 	}
 
 	private void showNewForm(HttpServletRequest req, HttpServletResponse resp)
 			throws SQLException, IOException, ServletException {
 
-		RequestDispatcher dispatcher = req.getRequestDispatcher("jsp/ArticlesForm.jsp");
+		RequestDispatcher dispatcher = req.getRequestDispatcher("ArticlesForm.jsp");
 		dispatcher.forward(req, resp);
 	}
 
 	private void listArticles(HttpServletRequest req, HttpServletResponse resp)
 			throws SQLException, IOException, ServletException {
-		RequestDispatcher dispatcher = req.getRequestDispatcher("jsp/Stufflist.jsp");
+		RequestDispatcher dispatcher = req.getRequestDispatcher("/ArticlesList.jsp");
 
 		List<Articles> listArticles = articlesDao.findAll();
 		req.setAttribute("listarticles", listArticles);
