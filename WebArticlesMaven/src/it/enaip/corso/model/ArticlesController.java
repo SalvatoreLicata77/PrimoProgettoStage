@@ -100,7 +100,7 @@ public class ArticlesController extends HttpServlet {
 		resp.sendRedirect("ArticlesList.jsp");
 	}
 
-	private void insertArticles(HttpServletRequest req, HttpServletResponse resp)
+	public void insertArticles(HttpServletRequest req, HttpServletResponse resp)
 			throws SQLException, IOException, ServletException {
 		String name = req.getParameter("name");
 		String description = req.getParameter("description");
